@@ -22,3 +22,4 @@ override.tf.json файлы с таким названием
 .terraformrc файлы с таким названием
 terraform.rc файлы с таким названием
 
+changes on fix branch

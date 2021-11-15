@@ -1,3 +1,5 @@
+#bcdedit /set hypervisorlaunchtype off
+
 # devops-netology
 second line
 third line

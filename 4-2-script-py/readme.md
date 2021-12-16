@@ -65,12 +65,35 @@ Process finished with exit code 0
 
 ### Ваш скрипт:
 ```python
-???
+import os
+import sys
+
+if len(sys.argv) < 2:
+    rep_path = os.getcwd()
+else:
+    rep_path = sys.argv[1]
+bash_command = ["cd " + rep_path, "git status 2>&1"]
+result_os = os.popen(' && '.join(bash_command)).read()
+is_change = False
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '\\').replace('/','\\')
+        print(rep_path + prepare_result)
+    elif result.find('fatal: not a git repository') != -1:
+        print('Atention: ' + rep_path+' - not git repository')
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+PS C:\Users\user\PycharmProjects\pythonProject> python .\script2.py C:\Users\user\4-2-python
+C:\Users\user\4-2-python\first.txt
+C:\Users\user\4-2-python\lib\third.txt
+C:\Users\user\4-2-python\second.txt
+```
+Запуск скрипта без аргументов в каталоге, не являющимся репозитроием
+```
+PS C:\Users\user\PycharmProjects\pythonProject> python .\script2.py                         
+Atention: C:\Users\user\PycharmProjects\pythonProject - not git repository
 ```
 
 ## Обязательная задача 4

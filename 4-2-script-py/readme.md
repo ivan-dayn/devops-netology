@@ -36,8 +36,18 @@ for result in result_os.split('\n'):
 ```
 
 ### Ваш скрипт:
+Пишу в системе Win10, поэтому пути не как в примере
 ```python
-???
+import os
+
+rep_path = r"C:\Users\user\4-2-python"
+bash_command = [r"cd " + rep_path, "git status"]
+result_os = os.popen(' && '.join(bash_command)).read()
+is_change = False
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '\\').replace('/','\\')
+        print(rep_path + prepare_result)
 ```
 
 ### Вывод скрипта при запуске при тестировании:

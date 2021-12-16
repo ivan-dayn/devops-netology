@@ -78,7 +78,7 @@ for result in result_os.split('\n'):
         prepare_result = result.replace('\tmodified:   ', '\\').replace('/','\\')
         print(rep_path + prepare_result)
     elif result.find('fatal: not a git repository') != -1:
-        print('Atention: ' + rep_path+' - not git repository')
+        print('Atention: ' + rep_path + ' - not git repository')
 ```
 
 ### Вывод скрипта при запуске при тестировании:

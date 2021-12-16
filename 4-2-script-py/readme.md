@@ -52,7 +52,12 @@ for result in result_os.split('\n'):
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+C:\Users\user\PycharmProjects\pythonProject\venv\Scripts\python.exe C:/Users/user/PycharmProjects/pythonProject/script2.py
+C:\Users\user\4-2-python\first.txt
+C:\Users\user\4-2-python\lib\third.txt
+C:\Users\user\4-2-python\second.txt
+
+Process finished with exit code 0
 ```
 
 ## Обязательная задача 3

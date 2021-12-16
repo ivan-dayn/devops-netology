@@ -41,7 +41,7 @@ for result in result_os.split('\n'):
 import os
 
 rep_path = r"C:\Users\user\4-2-python"
-bash_command = [r"cd " + rep_path, "git status"]
+bash_command = ["cd " + rep_path, "git status"]
 result_os = os.popen(' && '.join(bash_command)).read()
 for result in result_os.split('\n'):
     if result.find('modified') != -1:

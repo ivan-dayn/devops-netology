@@ -99,7 +99,11 @@ Atention: C:\Users\user\PycharmProjects\pythonProject - not git repository
 
 ### Ваш скрипт:
 ```python
-???
+import socket
+
+namesdict = {'drive.google.com':'','mail.google.com':'','google.com':''}
+print(namesdict['drive.google.com'])
+print(namesdict.keys() )
 ```
 
 ### Вывод скрипта при запуске при тестировании:

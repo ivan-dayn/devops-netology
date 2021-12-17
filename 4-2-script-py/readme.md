@@ -100,15 +100,34 @@ Atention: C:\Users\user\PycharmProjects\pythonProject - not git repository
 ### Ваш скрипт:
 ```python
 import socket
+import time
 
 namesdict = {'drive.google.com':'','mail.google.com':'','google.com':''}
-print(namesdict['drive.google.com'])
-print(namesdict.keys() )
+for key in namesdict:
+    namesdict[key] = socket.gethostbyname(key)
+while True:
+    for key in namesdict:
+        ip = socket.gethostbyname(key)
+        if namesdict[key] != ip:
+            print ('[ERROR] ' + key +' IP mismatch: ' + namesdict[key] + ' -> ' + ip)
+            namesdict[key] = ip
+        else:
+            print(key, namesdict[key])
+    time.sleep(5)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+C:\Users\admin\PycharmProjects\pythonProject4-2\venv\Scripts\python.exe C:/Users/admin/PycharmProjects/pythonProject4-2/script3.py
+drive.google.com 142.251.1.194
+mail.google.com 173.194.221.17
+google.com 64.233.165.102
+[ERROR] drive.google.com IP mismatch: 142.251.1.194 -> 8.8.8.8
+mail.google.com 173.194.221.17
+google.com 64.233.165.102
+drive.google.com 8.8.8.8
+mail.google.com 173.194.221.17
+google.com 64.233.165.102
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению

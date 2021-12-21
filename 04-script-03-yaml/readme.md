@@ -39,22 +39,61 @@
 
 ### Ваш скрипт:
 ```python
-???
+import socket
+import time
+import yaml
+import json
+
+namesdict = {'drive.google.com': '', 'mail.google.com': '', 'google.com': ''}
+for key in namesdict:
+    namesdict[key] = socket.gethostbyname(key)
+with open('log.json', 'w') as outf:
+    outf.write(json.dumps(namesdict, indent=2))
+with open('log.yaml', 'w') as outf:
+    outf.write(yaml.dump(namesdict))
+while True:
+    for key in namesdict:
+        ip = socket.gethostbyname(key)
+        if namesdict[key] != ip:
+            print('[ERROR] ' + key + ' IP mismatch: ' + namesdict[key] + ' -> ' + ip)
+            namesdict[key] = ip
+            with open('log.json', 'w') as outf:
+                outf.write(json.dumps(namesdict, indent=2))
+            with open('log.yaml', 'w') as outf:
+                outf.write(yaml.dump(namesdict))
+        else:
+            print(key, namesdict[key])
+    time.sleep(5)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+C:\Users\admin\PycharmProjects\pythonProject4-2\venv\Scripts\python.exe C:/Users/admin/PycharmProjects/pythonProject4-2/script3.py
+drive.google.com 8.8.8.8
+mail.google.com 173.194.221.83
+google.com 64.233.165.113
+[ERROR] drive.google.com IP mismatch: 8.8.8.8 -> 142.251.1.194
+mail.google.com 173.194.221.83
+google.com 64.233.165.113
+drive.google.com 142.251.1.194
+mail.google.com 173.194.221.83
+google.com 64.233.165.113
 ```
 
 ### json-файл(ы), который(е) записал ваш скрипт:
 ```json
-???
+{
+  "drive.google.com": "142.251.1.194",
+  "mail.google.com": "173.194.221.83",
+  "google.com": "64.233.165.113"
+}
 ```
 
 ### yml-файл(ы), который(е) записал ваш скрипт:
 ```yaml
-???
+drive.google.com: 142.251.1.194
+google.com: 64.233.165.113
+mail.google.com: 173.194.221.83
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению

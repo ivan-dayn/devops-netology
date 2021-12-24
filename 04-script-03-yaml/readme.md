@@ -161,8 +161,7 @@ else:
 ```
 
 ### Пример работы скрипта:
-валидные файлы переписываются в тихом режиме
-примеры ошибок:
+валидные файлы переписываются в тихом режиме, привожу примеры ошибок:
 ```
 PS C:\Users\admin\PycharmProjects\pythonProject4-2> py script4.py test.kjdfkyaml
 [ERROR]use *.json or *.yaml files

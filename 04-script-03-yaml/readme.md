@@ -154,11 +154,21 @@ if ext == '.json' or ext == '.yaml': # проверяем расширение
         inpf.seek(0)
     if firstsymb == '{':             
         convfromjson(fname, inpf)   # json всегда начинается с {, если нет, то yaml, если нет
-    else:                           # то будет exception (но првада,пробелы в начале не парсю)
+    else:                           # то будет exception (только,пробелы в начале не парсю)
         convfromyaml(fname, inpf)
 else:
     print('[ERROR]use *.json or *.yaml files')
 ```
 
 ### Пример работы скрипта:
-???
+валидные файлы переписываются в тихом режиме
+примеры ошибок:
+
+PS C:\Users\admin\PycharmProjects\pythonProject4-2> py script4.py test.kjdfkyaml
+[ERROR]use *.json or *.yaml files
+
+PS C:\Users\admin\PycharmProjects\pythonProject4-2> py script4.py log5.json
+[ERROR] in input file:
+         Expecting ':' delimiter: line 2 column 23 (char 24)
+
+

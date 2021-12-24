@@ -1,4 +1,4 @@
-# Домашнее задание к занятию "4.3. Языки разметки JSON и YAML"
+# Домашнее задание к занятию "4.3. Языки разметки JSON и YAML" - Дайн Иван
 
 
 ## Обязательная задача 1
@@ -108,7 +108,56 @@ mail.google.com: 173.194.221.83
 
 ### Ваш скрипт:
 ```python
-???
+import json
+import yaml
+import sys
+# проверка что аргумент есть и он один
+if len(sys.argv) < 2:
+    print("[ERROR] missing filename")
+    exit()
+elif len(sys.argv) > 2:
+    print("[ERROR] use only one filename")
+    exit()
+    
+def convfromjson(fname, inpf): # делаю yaml из json
+    try:
+        with open(fname, 'r') as inpf:
+            inpdata = json.load(inpf)
+        fname = fname[0:-4]+'yaml'      # меняю расширение
+        with open(fname, 'w') as outf:
+            outf.write(yaml.dump(inpdata))
+    except json.decoder.JSONDecodeError as err: # так проверяю синтаксис
+        print('[ERROR] in input file:\n\t', err)
+    pass
+
+def convfromyaml(fname, inpf):  # делаю json из yaml
+    try:
+        with open(fname, 'r') as inpf:
+            inpdata = yaml.safe_load(inpf)
+        fname = fname[0:-4]+'json'      # меняю расширение
+        with open(fname, 'w') as outf:
+            outf.write(json.dumps(inpdata, indent=2))
+    except yaml.scanner.ScannerError as err:        # так проверяю синтаксис ()
+        print('[ERROR] in input file:\n\t', err)
+    except yaml.parser.ParserError as err:
+        print('[ERROR] in input file:\n\t', err)
+    except yaml.constructor.ConstructorError as err:
+        print('[ERROR] in input file:\n\t', err)
+    pass
+
+fname = sys.argv[1]
+ext = fname[-5:]
+
+if ext == '.json' or ext == '.yaml': # проверяем расширение
+    with open(fname,'r') as inpf:
+        firstsymb = inpf.read(1)
+        inpf.seek(0)
+    if firstsymb == '{':             
+        convfromjson(fname, inpf)   # json всегда начинается с {, если нет, то yaml, если нет
+    else:                           # то будет exception (но првада,пробелы в начале не парсю)
+        convfromyaml(fname, inpf)
+else:
+    print('[ERROR]use *.json or *.yaml files')
 ```
 
 ### Пример работы скрипта:

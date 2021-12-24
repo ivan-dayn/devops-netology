@@ -163,7 +163,7 @@ else:
 ### Пример работы скрипта:
 валидные файлы переписываются в тихом режиме
 примеры ошибок:
-
+```
 PS C:\Users\admin\PycharmProjects\pythonProject4-2> py script4.py test.kjdfkyaml
 [ERROR]use *.json or *.yaml files
 
@@ -171,4 +171,4 @@ PS C:\Users\admin\PycharmProjects\pythonProject4-2> py script4.py log5.json
 [ERROR] in input file:
          Expecting ':' delimiter: line 2 column 23 (char 24)
 
-
+```

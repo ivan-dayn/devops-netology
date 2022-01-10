@@ -16,6 +16,7 @@ sudo ufw allow in on lo
 sudo ufw enable
 ```
 3. Установите hashicorp vault ([инструкция по ссылке](https://learn.hashicorp.com/tutorials/vault/getting-started-install?in=vault/getting-started#install-vault)).
+
 Add the HashiCorp GPG key.
 ```bash
 $ curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -

@@ -82,31 +82,40 @@ $ cat test.devsysdip.com.crt | jq -r .data.private_key > test.devsysdip.com.crt.
 
 Импортировал сертификат - файл CA_cert.crt
 ![Импортировал сертификат](https://github.com/ivan-dayn/devops-netology/blob/main/devsys-diplom/dip-cert.png)
-6. Установите nginx.
+
+6. Установил nginx.
 ```bash
 $ sudo apt install nginx
-$ sudo mkdir -p /var/www/devsysdip.com/html
+$ sudo mkdir -p /var/www/devsysdip.com/html       # создал дирекорию для файлов сайта и назначил права на неё
 $ sudo chmod -R 755 /var/www
-$ sudo ln -s /etc/nginx/sites-available/devsysdip.com /etc/nginx/sites-enabled/
+$ sudo ln -s /etc/nginx/sites-available/devsysdip.com /etc/nginx/sites-enabled/   # добавил сайт в разрешённые
+```
 
+
+7. По инструкции ([ссылка](https://nginx.org/en/docs/http/configuring_https_servers.html)) настроил nginx на https, используя ранее подготовленный сертификат:
+ 
+```bash
 $ cat /etc/nginx/sites-available/devsysdip.com
 server {
-        listen 443 ssl;                         # Specify the listening port
-        root /var/www/devsysdip.com/html;       # The path to the website files
-        index index.html index.htm;             # Files to display if only the domain name is specified in the address
-        server_name test.devsysdip.com;         # Domain name of this site
-        ssl_certificate /etc/ssl/certs/test.devsysdip.com.crt.pem;
+        listen 443 ssl;                         # указываю на каком порту ждать соединение
+        root /var/www/devsysdip.com/html;       # путь к файлам сайта
+        index index.html index.htm;             # страницы по умолчанию
+        server_name test.devsysdip.com;         # доменное имя сайта
+        ssl_certificate /etc/ssl/certs/test.devsysdip.com.crt.pem;  # пути до сертификата и закрытого ключа, заранее положил файлы туда
         ssl_certificate_key /etc/ssl/private/test.devsysdip.com.crt.key;
         location / {
                 try_files $uri $uri/ =404;
                 }
 }
-/etc/nginx/sites-enabled/devsysdip.com -> /etc/nginx/sites-available/devsysdip.com
+sudo systemctl reload nginx                     # перегружаю конфиг nginx
 ```
-7. По инструкции ([ссылка](https://nginx.org/en/docs/http/configuring_https_servers.html)) настройте nginx на https, используя ранее подготовленный сертификат:
-  - можно использовать стандартную стартовую страницу nginx для демонстрации работы сервера;
-  - можно использовать и другой html файл, сделанный вами;
 8. Откройте в браузере на хосте https адрес страницы, которую обслуживает сервер nginx.
+
+Отредактировал файл на хостовой системе C:\Windows\System32\drivers\etc\hosts
+
+![Сайт](https://github.com/ivan-dayn/devops-netology/blob/main/devsys-diplom/dip-site.png)
+
+
 9. Создайте скрипт, который будет генерировать новый сертификат в vault:
   - генерируем новый сертификат так, чтобы не переписывать конфиг nginx;
   - перезапускаем nginx для применения нового сертификата.

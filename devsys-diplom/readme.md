@@ -79,7 +79,8 @@ $ cat test.devsysdip.com.crt | jq -r .data.issuing_ca >> test.devsysdip.com.crt.
 $ cat test.devsysdip.com.crt | jq -r .data.private_key > test.devsysdip.com.crt.key   # записываю закрытый ключ
 ```
 5. Установил корневой сертификат созданного центра сертификации в доверенные в хостовой системе.
-Импортировал сертификат
+
+Импортировал сертификат - файл CA_cert.crt
 ![Импортировал сертификат](https://github.com/ivan-dayn/devops-netology/blob/main/devsys-diplom/dip-cert.png)
 6. Установите nginx.
 ```bash

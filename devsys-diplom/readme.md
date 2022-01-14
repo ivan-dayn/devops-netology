@@ -30,8 +30,66 @@ Update and install.
 $ sudo apt-get update && sudo apt-get install vault
 ```
 4. Cоздайте центр сертификации по инструкции ([ссылка](https://learn.hashicorp.com/tutorials/vault/pki-engine?in=vault/secrets-management)) и выпустите сертификат для использования его в настройке веб-сервера nginx (срок жизни сертификата - месяц).
+```bash
+$ vault server -dev -dev-root-token-id root
+$ export VAULT_ADDR=http://127.0.0.1:8200
+$ export VAULT_TOKEN=root
+
+$ vault secrets enable pki
+$ vault secrets tune -max-lease-ttl=87600h pki
+$ vault write -field=certificate pki/root/generate/internal \
+     common_name="devsysdip.com" \
+     ttl=87600h > CA_cert.crt
+$ vault write pki/config/urls \
+     issuing_certificates="$VAULT_ADDR/v1/pki/ca" \
+     crl_distribution_points="$VAULT_ADDR/v1/pki/crl"
+
+$ vault secrets enable -path=pki_int pki
+$ vault secrets tune -max-lease-ttl=43800h pki_int
+$ vault write -format=json pki_int/intermediate/generate/internal \
+     common_name="devsysdip.com Intermediate Authority" \
+     | jq -r '.data.csr' > pki_intermediate.csr
+$ vault write -format=json pki/root/sign-intermediate csr=@pki_intermediate.csr \
+     format=pem_bundle ttl="43800h" \
+     | jq -r '.data.certificate' > intermediate.cert.pem
+$ vault write pki_int/intermediate/set-signed certificate=@intermediate.cert.pem
+
+$ vault write pki_int/roles/example-dot-com \
+     allowed_domains="devsysdip.com" \
+     allow_subdomains=true \
+     max_ttl="720h"
+
+$ vault write -format=json pki_int/issue/example-dot-com common_name="test.example.com" ttl="720h" > test.devsysdip.com.crt
+
+$ cat test.devsysdip.com.crt | jq -r .data.certificate > test.devsysdip.com.crt.pem
+$ cat test.devsysdip.com.crt | jq -r .data.issuing_ca >> test.devsysdip.com.crt.pem
+$ cat test.devsysdip.com.crt | jq -r .data.private_key > test.devsysdip.com.crt.key
+
+
+```
 5. Установите корневой сертификат созданного центра сертификации в доверенные в хостовой системе.
+Импортировал сертификат
 6. Установите nginx.
+```bash
+$ sudo apt install nginx
+$ sudo mkdir -p /var/www/devsysdip.com/html
+$ sudo chmod -R 755 /var/www
+$ sudo ln -s /etc/nginx/sites-available/devsysdip.com /etc/nginx/sites-enabled/
+
+$ cat /etc/nginx/sites-available/devsysdip.com
+server {
+        listen 443 ssl;                         # Specify the listening port
+        root /var/www/devsysdip.com/html;       # The path to the website files
+        index index.html index.htm;             # Files to display if only the domain name is specified in the address
+        server_name test.devsysdip.com;         # Domain name of this site
+        ssl_certificate /etc/ssl/certs/test.devsysdip.com.crt.pem;
+        ssl_certificate_key /etc/ssl/private/test.devsysdip.com.crt.key;
+        location / {
+                try_files $uri $uri/ =404;
+                }
+}
+/etc/nginx/sites-enabled/devsysdip.com -> /etc/nginx/sites-available/devsysdip.com
+```
 7. По инструкции ([ссылка](https://nginx.org/en/docs/http/configuring_https_servers.html)) настройте nginx на https, используя ранее подготовленный сертификат:
   - можно использовать стандартную стартовую страницу nginx для демонстрации работы сервера;
   - можно использовать и другой html файл, сделанный вами;

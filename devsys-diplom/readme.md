@@ -1,10 +1,5 @@
 # Курсовая работа по итогам модуля "DevOps и системное администрирование" - Дайн Иван
 
-Курсовая работа необходима для проверки практических навыков, полученных в ходе прохождения курса "DevOps и системное администрирование".
-
-Мы создадим и настроим виртуальное рабочее место. Позже вы сможете использовать эту систему для выполнения домашних заданий по курсу
-
-## Задание
 
 1. Создайте виртуальную машину Linux.
 Создал виртуальную машину на Oracle VM VirtualBox, с помощью Vagrant, использованный конфигурационный файл:
@@ -26,29 +21,33 @@ sudo ufw enable
 ```
 3. Установите hashicorp vault ([инструкция по ссылке](https://learn.hashicorp.com/tutorials/vault/getting-started-install?in=vault/getting-started#install-vault)).
 
-Add the HashiCorp GPG key.
+Добавляю в систему GPG ключ HashiCorp
 ```bash
 $ curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 ```
-Add the official HashiCorp Linux repository.
+Добавляю репозиторий HashiCorp Linux.
 ```bash
 $ sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 ```
-Update and install.
+Устанавливаю Vault, предварительно обновив установщик.
 ```bash
 $ sudo apt-get update && sudo apt-get install vault
 ```
 4. Cоздайте центр сертификации по инструкции ([ссылка](https://learn.hashicorp.com/tutorials/vault/pki-engine?in=vault/secrets-management)) и выпустите сертификат для использования его в настройке веб-сервера nginx (срок жизни сертификата - месяц).
 ```bash
-$ vault server -dev -dev-root-token-id root
-$ export VAULT_ADDR=http://127.0.0.1:8200
+$ vault server -dev -dev-root-token-id root # запуск Vault в dev (ознакомительном) режиме с рутовым токеном
+$ export VAULT_ADDR=http://127.0.0.1:8200   #задаём переменные окружения
 $ export VAULT_TOKEN=root
-
-$ vault secrets enable pki
-$ vault secrets tune -max-lease-ttl=87600h pki
-$ vault write -field=certificate pki/root/generate/internal \
+```
+Создаю корневой сертификат центра сертификации
+```bash
+$ vault secrets enable pki                                           # включаю pki в ветке pki
+$ vault secrets tune -max-lease-ttl=87600h pki                       # срок жизни примерно 10 лет
+$ vault write -field=certificate pki/root/generate/internal \        # генерирую корневой сертификат
      common_name="devsysdip.com" \
      ttl=87600h > CA_cert.crt
+```
+```bash
 $ vault write pki/config/urls \
      issuing_certificates="$VAULT_ADDR/v1/pki/ca" \
      crl_distribution_points="$VAULT_ADDR/v1/pki/crl"

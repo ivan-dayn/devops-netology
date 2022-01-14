@@ -54,12 +54,12 @@ $ vault write -format=json pki/root/sign-intermediate csr=@pki_intermediate.csr 
      | jq -r '.data.certificate' > intermediate.cert.pem
 $ vault write pki_int/intermediate/set-signed certificate=@intermediate.cert.pem
 
-$ vault write pki_int/roles/example-dot-com \
+$ vault write pki_int/roles/devsysdip-dot-com \
      allowed_domains="devsysdip.com" \
      allow_subdomains=true \
      max_ttl="720h"
 
-$ vault write -format=json pki_int/issue/example-dot-com common_name="test.example.com" ttl="720h" > test.devsysdip.com.crt
+$ vault write -format=json pki_int/issue/devsysdip-dot-com common_name="test.devsysdip.com" ttl="720h" > test.devsysdip.com.crt
 
 $ cat test.devsysdip.com.crt | jq -r .data.certificate > test.devsysdip.com.crt.pem
 $ cat test.devsysdip.com.crt | jq -r .data.issuing_ca >> test.devsysdip.com.crt.pem

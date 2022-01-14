@@ -80,7 +80,7 @@ $ cat test.devsysdip.com.crt | jq -r .data.private_key > test.devsysdip.com.crt.
 ```
 5. Установил корневой сертификат созданного центра сертификации в доверенные в хостовой системе.
 Импортировал сертификат
-![Импортировал сертификат](https://github.com/ivan-dayn/devops-netology/blob/main/devsys-diplom/dip-site.png)
+![Импортировал сертификат](https://github.com/ivan-dayn/devops-netology/blob/main/devsys-diplom/dip-cert.png)
 6. Установите nginx.
 ```bash
 $ sudo apt install nginx

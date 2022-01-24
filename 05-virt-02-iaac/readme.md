@@ -27,6 +27,11 @@
 
 - VirtualBox
 ```bash
+get -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+sudo apt-get update
+sudo apt install virtualbox virtualbox-ext-pack
+
 $ virtualbox --help
 Oracle VM VirtualBox VM Selector v6.1.26_Ubuntu
 (C) 2005-2021 Oracle Corporation
@@ -34,11 +39,23 @@ All rights reserved.
 ```
 - Vagrant
 ```bash
+sudo apt install curl
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install vagrant
+
 $ vagrant --version
 Vagrant 2.2.19
 ```
 - Ansible
 ```bash
+sudo add-apt-repository universe multiverse
+sudo add-apt-repository universe
+sudo add-apt-repository multiverse
+sudo apt update
+sudo apt install ansible
+
+
 $ ansible --version
 ansible 2.9.6
   config file = /etc/ansible/ansible.cfg

@@ -70,16 +70,12 @@ ansible 2.9.6
   python version = 3.8.10 (default, Nov 26 2021, 20:14:08) [GCC 9.3.0]
 ```
 
-*Приложить вывод команд установленных версий каждой из программ, оформленный в markdown 22  sudo apt install software-properties-common
-   23  sudo apt install python 3.8
-   24  sudo apt install python3.8
-.*
+*Приложить вывод команд установленных версий каждой из программ, оформленный в markdown.*
 
 ## Задача 4 (*)
 
 Воспроизвести практическую часть лекции самостоятельно.
 
-``
 ```bash
 
 sudo apt install software-properties-common
@@ -95,7 +91,7 @@ mkdir ansible ansible/inventory
 cd vagrant
 vagrant init 
 ```
-Разложил файлы из репозитория по директориям
+`Разложил файлы из репозитория по каталогам`
 ```bash
 vagrant up
 

@@ -6,6 +6,7 @@
 ## Задача 1
 
 - Опишите своими словами основные преимущества применения на практике IaaC паттернов.
+
 `
 sjd sfdisa dsaujdsa dsajdksajdsajdoksajdsajdksajdsajdsdposa pods os dposai dposadpsad spod soa idposaids dpsakdposakdposa posa posapo[as saka[[asi[as i[pisap[doisap[oip[psodpdsih
 `

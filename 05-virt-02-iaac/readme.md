@@ -25,6 +25,7 @@
 
 Установить на личный компьютер:
 
+`Выполнял на свежеустановленной Ubuntu 20.04`
 - VirtualBox
 ```bash
 get -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
@@ -88,8 +89,15 @@ $ssh-keygen
 mkdir vagrant
 mkdir ansible ansible/inventory
 cd vagrant
-vagrant init
+vagrant init 
+```
+Разложил файлы из репозитория по директориям
+```bash
 vagrant up
+
+получил ошибку, т.к. файл provosion.yml расположил неверно, переложил
+
+vagrant provision
 
 ==> server1.netology: Running provisioner: ansible...
     server1.netology: Running ansible-playbook...
@@ -121,11 +129,9 @@ PLAY RECAP *********************************************************************
 server1.netology           : ok=7    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 ```
 
-`
-под управлением Ubuntu 20.04 всё
-`
 - Зайти внутрь ВМ, убедиться, что Docker установлен с помощью команды
 ```
+vagarnt ssh
 docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 

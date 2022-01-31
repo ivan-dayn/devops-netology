@@ -37,9 +37,9 @@ root@9eefbfdcb7b2:/usr/share/nginx/html# exit
 $ docker commit -m "Modified index.html" -a "Ivan Dayn" 9eefbfdcb7b2 ivandayn/nginx:vid
 sha256:6264b2e43d856d00906e5e60c2d354697b448d8d00f477d0f03cf9b4021ee8f7
 ```
-Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки на https://hub.docker.com/username_repo.
+Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки.
 
-https://hub.docker.com/layers/ivandayn/nginx/vid/images/sha256-81317d50a26e1418c749692b7c060ce5353e79b7a11294a055d3392fbdf4193a?context=repo
+https://hub.docker.com/repository/docker/ivandayn/nginx/general
 
 ## Задача 2
 

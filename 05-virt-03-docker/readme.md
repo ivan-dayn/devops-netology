@@ -9,11 +9,13 @@
 Сценарий выполения задачи:
 
 - создайте свой репозиторий на https://hub.docker.com;
-- 
+
 https://hub.docker.com/u/ivandayn
 - выберете любой образ, который содержит веб-сервер Nginx;
+
 `выбрал официальный nginx:latest`
 - создайте свой fork образа;
+
 `docker pull nginx`
 - реализуйте функциональность:
 запуск веб-сервера в фоне с индекс-страницей, содержащей HTML-код ниже:
@@ -27,7 +29,17 @@ Hey, Netology
 </body>
 </html>
 ```
+```bash
+$ docker run -it --name ng-test -p 80:80 nginx bash
+root@9eefbfdcb7b2:/# cd /usr/share/nginx/html/
+root@9eefbfdcb7b2:/usr/share/nginx/html# echo "<html><head>Hey, Netology</head><body><h1>I&rsquo;m DevOps Engineer&#33;</h1></body></html>" > index.html
+root@9eefbfdcb7b2:/usr/share/nginx/html# exit
+$ docker commit -m "Modified index.html" -a "Ivan Dayn" 9eefbfdcb7b2 ivandayn/nginx:vid
+sha256:6264b2e43d856d00906e5e60c2d354697b448d8d00f477d0f03cf9b4021ee8f7
+```
 Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки на https://hub.docker.com/username_repo.
+
+https://hub.docker.com/layers/ivandayn/nginx/vid/images/sha256-81317d50a26e1418c749692b7c060ce5353e79b7a11294a055d3392fbdf4193a?context=repo
 
 ## Задача 2
 

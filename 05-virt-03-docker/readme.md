@@ -39,6 +39,8 @@ sha256:6264b2e43d856d00906e5e60c2d354697b448d8d00f477d0f03cf9b4021ee8f7
 $ docker login -u ivandayn
 $ docker push ivandayn/nginx:vid
 ```
+![image](https://user-images.githubusercontent.com/93118042/151934903-e4da60c1-f1d6-47c4-a9a9-11b9c368d6f2.png)
+
 Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки.
 
 https://hub.docker.com/repository/docker/ivandayn/nginx/general

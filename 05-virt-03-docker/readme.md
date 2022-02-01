@@ -78,15 +78,6 @@ vagrant@server1:~$ docker ps
 CONTAINER ID   IMAGE          COMMAND        CREATED          STATUS          PORTS     NAMES
 d194e1083df8   b8d808eca4b3   "sleep 1000"   13 seconds ago   Up 12 seconds             deb
 f2f203eaadc8   5d0da3dc9764   "sleep 1000"   35 seconds ago   Up 34 seconds             cen
-vagrant@server1:~$ docker exec cen sh -c "echo Hi > /data/fromCentOS"
-vagrant@server1:~$ echo Hi > /home/vagrant/data/fromHost
-vagrant@server1:~$ docker exec -it deb bash
-root@d194e1083df8:/# ls -al /data
-total 16
-drwxrwxr-x 2 1000 1000 4096 Feb  1 07:59 .
-drwxr-xr-x 1 root root 4096 Feb  1 07:58 ..
--rw-r--r-- 1 root root    3 Feb  1 07:58 fromCentOS
--rw-rw-r-- 1 1000 1000    3 Feb  1 07:59 fromHost
 ```
 - Подключитесь к первому контейнеру с помощью ```docker exec``` и создайте текстовый файл любого содержания в ```/data```;
 ```bash

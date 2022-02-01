@@ -36,6 +36,8 @@ root@9eefbfdcb7b2:/usr/share/nginx/html# echo "<html><head>Hey, Netology</head><
 root@9eefbfdcb7b2:/usr/share/nginx/html# exit
 $ docker commit -m "Modified index.html" -a "Ivan Dayn" 9eefbfdcb7b2 ivandayn/nginx:vid
 sha256:6264b2e43d856d00906e5e60c2d354697b448d8d00f477d0f03cf9b4021ee8f7
+$ docker login -u ivandayn
+$ docker push ivandayn/nginx:vid
 ```
 Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки.
 

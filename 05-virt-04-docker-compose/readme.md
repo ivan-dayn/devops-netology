@@ -34,9 +34,74 @@
 
 Создать вторую ВМ и подключить её к мониторингу развёрнутому на первом сервере.
 
+С помощью Terraform создал вторую ВМ node02 в том же каталоге и сети, что и node01.
+Закрепил внешине адреса созданных ВМ, т.к. в яндекс-облаке они по умолчанию динамические и менялись после рестарта ВМ.
+С помощью ansible развернул на node02 nodexporter и cAdvisor, поправив docker-compose.yml (добавил проброс портов)
+```yaml
+version: '2.1'
+
+networks:
+  monitoring:
+    driver: bridge
+
+services:
+
+  nodeexporter:
+    image: prom/node-exporter:v0.18.1
+    container_name: nodeexporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: always
+    networks:
+      - monitoring
+    ports:
+      - 9100:9100
+    labels:
+      org.label-schema.group: "monitoring"
+
+  cadvisor:
+    image: gcr.io/google-containers/cadvisor:v0.34.0
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /cgroup:/cgroup:ro
+    restart: always
+    networks:
+      - monitoring
+    ports:
+      - 8080:8080
+    labels:
+      org.label-schema.group: "monitoring"
+```
+Далее поправил конфиг прометея на node1 добавил
+
+```yaml
+  - job_name: 'nodeexporter2'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['node02:9100']
+
+  - job_name: 'cadvisor2'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['node02:8080']
+```
+и сделал релоад прометея
+```bash
+[root@node01 stack]# docker exec -it prometheus kill -HUP 1
+```
+С графаной также имел дело первый раз) добавил панельку с источником данных с node02
 ![image](https://user-images.githubusercontent.com/93118042/152520208-ce9828d5-744b-4dbe-a421-fdca4dcd6d4c.png)
 
 
-Для получения зачета, вам необходимо предоставить:
-- Скриншот из Grafana, на котором будут отображаться метрики добавленного вами сервера.
 

@@ -18,6 +18,10 @@
 ## Задача 2
 
 Создать вашу первую виртуальную машину в Яндекс.Облаке.
+На память как генерить key.json https://cloud.yandex.ru/docs/iam/quickstart-sa
+```bash
+yc iam key create --service-account-name my-robot --output key.json
+```
 
 ![image](https://user-images.githubusercontent.com/93118042/152302495-a6eb8771-94b6-4ee5-b072-d7afa0c4acba.png)
 

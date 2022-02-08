@@ -28,6 +28,8 @@
 ```
 docker node ls
 ```
+![image](https://user-images.githubusercontent.com/93118042/152985851-6c6e6900-5b67-45c3-9322-0aace100a82e.png)
+
 
 ## Задача 3
 
@@ -37,6 +39,8 @@ docker node ls
 ```
 docker service ls
 ```
+![image](https://user-images.githubusercontent.com/93118042/152986079-d987cbd2-8cd1-4135-b8ac-cb240f9a5437.png)
+
 
 ## Задача 4 (*)
 

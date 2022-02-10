@@ -48,3 +48,15 @@ docker service ls
 docker swarm update --autolock=true
 ```
 
+![image](https://user-images.githubusercontent.com/93118042/153378027-aa0d36f5-3588-4483-b7fb-1540b26d32fc.png)
+
+После выпонения команды ключи для обмена информации между лидерами и ключ (де)шифрования логов RAFT становятся зашифрованы секретом, указанном в выводе. 
+
+Если подключится ко второй ноде и рестаровать демон докера, выключится, но стартовать не сможет, т.к. вышеуказанные ключи зашифрованы секретом
+
+![image](https://user-images.githubusercontent.com/93118042/153378424-488adf5e-1aaa-4aa1-96af-a448b566feeb.png)
+
+Для старта демона докера нужно воспользоваться командрй `docker swarm unlock` и ввести секрет
+![image](https://user-images.githubusercontent.com/93118042/153378681-d486c04e-3046-48f0-8d78-aec14f34194a.png)
+
+

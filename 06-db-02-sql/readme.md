@@ -12,6 +12,27 @@
 
 Приведите получившуюся команду или docker-compose манифест.
 
+```bash
+user@WS-045:~$ docker run --rm --name pg12 -e POSTGRES_PASSWORD=test -d -p 5432:5432 -v vol-pg-data:/var/lib/postgresql/data -v vol-pg-backup:/var/lib/postgresql/backup postgres:12
+d74b983666a914c56d4767e046acc1c2b56a4f857a13eaf2dcc08119bfdb5333
+user@WS-045:~$ psql -h 127.0.0.1 -U postgres
+Password for user postgres: 
+psql (12.9 (Ubuntu 12.9-0ubuntu0.20.04.1), server 12.10 (Debian 12.10-1.pgdg110+1))
+Type "help" for help.
+
+postgres-# \l
+                                 List of databases
+   Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
+-----------+----------+----------+------------+------------+-----------------------
+ postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+ template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+           |          |          |            |            | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+           |          |          |            |            | postgres=CTc/postgres
+(3 rows)
+```
+
+
 ## Задача 2
 
 В БД из задачи 1: 

@@ -126,6 +126,32 @@ test_db=# \du
  test-simple-user |                                                            | {}
 ```
 - описание таблиц (describe)
+```
+test_db=# \d orders
+               Table "public.orders"
+ Column |  Type   | Collation | Nullable | Default 
+--------+---------+-----------+----------+---------
+ id     | integer |           | not null | 
+ name   | text    |           |          | 
+ price  | integer |           |          | 
+Indexes:
+    "orders_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "clients" CONSTRAINT "clients_ord_fkey" FOREIGN KEY (ord) REFERENCES orders(id)
+
+test_db=# \d clients
+               Table "public.clients"
+  Column  |  Type   | Collation | Nullable | Default 
+----------+---------+-----------+----------+---------
+ id       | integer |           | not null | 
+ lastname | text    |           |          | 
+ country  | text    |           |          | 
+ ord      | integer |           |          | 
+Indexes:
+    "clients_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "clients_ord_fkey" FOREIGN KEY (ord) REFERENCES orders(id)
+```
 - SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
 ```
 test_db=# SELECT * FROM information_schema.table_privileges WHERE grantee in ('test-admin-user', 'test-simple-user');

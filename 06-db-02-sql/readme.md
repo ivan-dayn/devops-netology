@@ -36,7 +36,7 @@ postgres-# \l
 
 В БД из задачи 1: 
 - создайте пользователя test-admin-user и БД test_db
-```postgres=# CREATE USER "test-admin-user" WITH SUPERUSER;
+``` postgres=# CREATE USER "test-admin-user" WITH SUPERUSER;
 CREATE ROLE ```
 - в БД test_db создайте таблицу orders и clients (спeцификация таблиц ниже)
 - предоставьте привилегии на все операции пользователю test-admin-user на таблицы БД test_db

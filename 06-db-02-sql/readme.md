@@ -251,17 +251,6 @@ test_db=# UPDATE clients SET ord = 4 WHERE id = 2;
 UPDATE 1
 test_db=# UPDATE clients SET ord = 5 WHERE id = 3;
 UPDATE 1
-test_db=# SELECT lastname FROM clients WHERE ord NOT NULL;
-ERROR:  syntax error at or near "NOT"
-LINE 1: SELECT lastname FROM clients WHERE ord NOT NULL;
-                                               ^
-test_db=# SELECT lastname FROM clients WHERE ord > 0;
-       lastname       
-----------------------
- Иванов Иван Иванович
- Петров Петр Петрович
- Иоганн Себастьян Бах
-(3 rows)
 
 test_db=# SELECT lastname FROM clients WHERE ord IS NOT NULL;
        lastname       

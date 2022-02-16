@@ -267,6 +267,16 @@ test_db=# SELECT lastname FROM clients WHERE ord IS NOT NULL;
 (используя директиву EXPLAIN).
 
 Приведите получившийся результат и объясните что значат полученные значения.
+```
+test_db=# EXPLAIN SELECT lastname FROM clients WHERE ord IS NOT NULL;
+                        QUERY PLAN                         
+-----------------------------------------------------------
+ Seq Scan on clients  (cost=0.00..18.10 rows=806 width=32)
+   Filter: (ord IS NOT NULL)
+(2 rows)
+
+
+```
 
 ## Задача 6
 

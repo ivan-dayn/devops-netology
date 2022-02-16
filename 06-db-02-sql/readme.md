@@ -12,7 +12,7 @@
 
 Приведите получившуюся команду или docker-compose манифест.
 
-```bash
+```
 user@WS-045:~$ docker run --rm --name pg12 -e POSTGRES_PASSWORD=test -d -p 5432:5432 -v vol-pg-data:/var/lib/postgresql/data -v vol-pg-backup:/var/lib/postgresql/backup postgres:12
 d74b983666a914c56d4767e046acc1c2b56a4f857a13eaf2dcc08119bfdb5333
 user@WS-045:~$ psql -h 127.0.0.1 -U postgres
@@ -244,6 +244,33 @@ test_db=# SELECT count (*) FROM clients;
 Приведите SQL-запрос для выдачи всех пользователей, которые совершили заказ, а также вывод данного запроса.
  
 Подсказк - используйте директиву `UPDATE`.
+```
+test_db=# UPDATE clients SET ord = 3 WHERE id = 1;
+UPDATE 1
+test_db=# UPDATE clients SET ord = 4 WHERE id = 2;
+UPDATE 1
+test_db=# UPDATE clients SET ord = 5 WHERE id = 3;
+UPDATE 1
+test_db=# SELECT lastname FROM clients WHERE ord NOT NULL;
+ERROR:  syntax error at or near "NOT"
+LINE 1: SELECT lastname FROM clients WHERE ord NOT NULL;
+                                               ^
+test_db=# SELECT lastname FROM clients WHERE ord > 0;
+       lastname       
+----------------------
+ Иванов Иван Иванович
+ Петров Петр Петрович
+ Иоганн Себастьян Бах
+(3 rows)
+
+test_db=# SELECT lastname FROM clients WHERE ord IS NOT NULL;
+       lastname       
+----------------------
+ Иванов Иван Иванович
+ Петров Петр Петрович
+ Иоганн Себастьян Бах
+(3 rows)
+```
 
 ## Задача 5
 

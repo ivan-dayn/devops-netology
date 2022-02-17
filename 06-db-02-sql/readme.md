@@ -290,6 +290,19 @@ total 4
 
 ```
 Остановите контейнер с PostgreSQL (но не удаляйте volumes).
+```
+user@WS-045:~$ docker stop pg12
+pg12
+user@WS-045:~$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+user@WS-045:~$ docker volume ls
+DRIVER    VOLUME NAME
+local     650ded7b7729ca9ad7ff23b44afb1fc96908cd1b90f37303c83f00107a563efd
+local     71915dfc7d06a40bc6c84961702532ceb0471d9a8705ea31c73c5932f327fd38
+local     c2edb27b0a75b10695f5e5c44a71c661695c52cd9c3aec420973f9d09d566cb4
+local     vol-pg-backup
+local     vol-pg-data
+```
 
 Поднимите новый пустой контейнер с PostgreSQL.
 

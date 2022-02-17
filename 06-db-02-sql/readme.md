@@ -281,7 +281,14 @@ test_db=# EXPLAIN SELECT lastname FROM clients WHERE ord IS NOT NULL;
 ## Задача 6
 
 Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).
+```
+user@WS-045:~$ docker exec -t pg12 pg_dump -U postgres -f /var/lib/postgresql/backup/dump_test_db.sql
 
+user@WS-045:~$ sudo ls -l /var/lib/docker/volumes/vol-pg-backup/_data
+total 4
+-rw-r--r-- 1 root root 545 фев 16 17:50 dump_test_db.sql
+
+```
 Остановите контейнер с PostgreSQL (но не удаляйте volumes).
 
 Поднимите новый пустой контейнер с PostgreSQL.

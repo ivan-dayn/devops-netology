@@ -307,6 +307,74 @@ local     vol-pg-data
 Поднимите новый пустой контейнер с PostgreSQL.
 
 Восстановите БД test_db в новом контейнере.
+```
+user@WS-045:~$ docker run --rm --name pg12-new -e POSTGRES_PASSWORD=test -d -p 5432:5432 -v vol-pg-data-new:/var/lib/postgresql/data -v vol-pg-backup:/var/lib/postgresql/backup postgres:12
+1512062d1321f4f2c1ac1cbd2465a012b1d41c22557cc9a837e8976bb09a3c97
+user@WS-045:~$ docker exec -it pg12-new psql -U postgres -d test_db -f /var/lib/postgresql/backup/dump_test_db.sql
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "test_db" does not exist
+user@WS-045:~$ psql -h 127.0.0.1 -U postgres
+Password for user postgres: 
+psql (12.9 (Ubuntu 12.9-0ubuntu0.20.04.1), server 12.10 (Debian 12.10-1.pgdg110+1))
+Type "help" for help.
+
+postgres=# CREATE DATABASE test_db
+postgres-# exit
+Use \q to quit.
+postgres-# \q
+user@WS-045:~$ docker exec -it pg12-new psql -U postgres -d test_db -f /var/lib/postgresql/backup/dump_test_db.sql
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "test_db" does not exist
+user@WS-045:~$ psql -h 127.0.0.1 -U postgres
+Password for user postgres: 
+psql (12.9 (Ubuntu 12.9-0ubuntu0.20.04.1), server 12.10 (Debian 12.10-1.pgdg110+1))
+Type "help" for help.
+
+postgres=# CREATE DATABASE test_db;
+CREATE DATABASE
+postgres=# exit
+user@WS-045:~$ docker exec -it pg12-new psql -U postgres -d test_db -f /var/lib/postgresql/backup/dump_test_db.sql
+SET
+SET
+SET
+SET
+SET
+ set_config 
+------------
+ 
+(1 row)
+
+SET
+SET
+SET
+SET
+SET
+SET
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+COPY 5
+COPY 5
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:/var/lib/postgresql/backup/dump_test_db.sql:104: ERROR:  role "test-simple-user" does not exist
+psql:/var/lib/postgresql/backup/dump_test_db.sql:111: ERROR:  role "test-simple-user" does not exist
+user@WS-045:~$ psql -h 127.0.0.1 -U postgres
+Password for user postgres: 
+psql (12.9 (Ubuntu 12.9-0ubuntu0.20.04.1), server 12.10 (Debian 12.10-1.pgdg110+1))
+Type "help" for help.
+
+postgres=# \c test_db
+psql (12.9 (Ubuntu 12.9-0ubuntu0.20.04.1), server 12.10 (Debian 12.10-1.pgdg110+1))
+You are now connected to database "test_db" as user "postgres".
+test_db=# \dt
+          List of relations
+ Schema |  Name   | Type  |  Owner   
+--------+---------+-------+----------
+ public | clients | table | postgres
+ public | orders  | table | postgres
+(2 rows)
+```
 
 Приведите список операций, который вы применяли для бэкапа данных и восстановления. 
 

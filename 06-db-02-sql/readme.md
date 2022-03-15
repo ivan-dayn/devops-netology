@@ -278,7 +278,7 @@ test_db=# EXPLAIN SELECT lastname FROM clients WHERE ord IS NOT NULL;
 
 ```
 
-## Задача 6
+## Задача 6*
 
 Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).
 ```
